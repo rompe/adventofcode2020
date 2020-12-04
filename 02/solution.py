@@ -12,7 +12,7 @@ def solution(input_file):
         count, char, password = line.split()
         char = char[0]
         lowest, highest = count.split('-')
-        if int(lowest) <= password.count(char) <= int(highest):
+        if (password[int(lowest) - 1] == char) ^ (password[int(highest) - 1] == char):
             valids += 1
     print(valids)
 
