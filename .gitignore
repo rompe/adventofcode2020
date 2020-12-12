@@ -1,0 +1,5 @@
+.coverage
+coverage.xml
+prof/
+__pycache__/
+input.txt
