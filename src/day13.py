@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 
 import sys
+import threading
+import time
+
+
+cache = dict(timestamp=0)
 
 
 def solution1(input_file):
@@ -15,6 +20,13 @@ def solution1(input_file):
     return min_time * waiting_times[min_time]
 
 
+def print_progress():
+    """Show progress."""
+    while True:
+        print("Working on timestamp %s" % cache["timestamp"])
+        time.sleep(10)
+
+
 def solution2(input_file):
     """Solve today's riddle."""
     # lines = open(input_file).read().split('\n\n')
@@ -24,9 +36,11 @@ def solution2(input_file):
     max_bus_index = buses.index(max_bus)
     timestamp = max_bus - max_bus_index
 
+    threading.Thread(target=print_progress, daemon=True).start()
+
     while True:
         timestamp += max_bus
-        print(timestamp)
+        cache["timestamp"] = timestamp
         for offset, bus in enumerate(buses):
             if bus != 0 and (timestamp + offset) % bus != 0:
                 break
