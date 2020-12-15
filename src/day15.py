@@ -27,32 +27,29 @@ def solution1(input_file):
         numbers.append(number)
 
 
-def solution2(input_file):
+def solution2(input_file, rounds=30000000):
     """Solve today's riddle."""
     # lines = open(input_file).read().split('\n\n')
     lines = open(input_file).read().splitlines()
     numbers = [int(number) for number in lines[0].split(',')]
-    spoken_once = set()
-    spoken_twice = set()
+    indices = collections.defaultdict(list)
+    for index, number in enumerate(numbers):
+        indices[number].append(index)
     while True:
         last = numbers[-1]
         length = len(numbers)
         if length % 10000 == 0:
             print(length)
-        if length == 30000000:
+        if length == rounds:
             return last
-        if last in spoken_twice:
+        if len(indices[last]) > 1:
             # print('%s has been said before' % last)
-            number = numbers[-2::-1].index(last) + 1
+            number = indices[last][-1] - indices[last][-2]
             # print('distance between the latest %s is %s in %s' % (last, number, numbers))
         else:
             # print('%s has not been said before' % last)
             number = 0
-        if number not in spoken_twice:
-            if number in spoken_once:
-                spoken_twice.add(number)
-            else:
-                spoken_once.add(number)
+        indices[number].append(len(numbers))
         numbers.append(number)
 
 

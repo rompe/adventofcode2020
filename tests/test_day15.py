@@ -18,5 +18,5 @@ class Day15Test(unittest.TestCase):
 
     def test_solution2(self):
         """Test solution2()."""
-        result = day15.solution2(self.input_file)
+        result = day15.solution2(self.input_file, rounds=2020)
         self.assertEqual(result, 436)
